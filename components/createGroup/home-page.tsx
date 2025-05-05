@@ -7,7 +7,7 @@ import { fetchUserGroupsData } from "@/server/fetchHelpers";
 import useUserGroupsDataStore from "@/store/user-groups-data-store";
 import useUserStore from "@/store/user-info-store";
 import { useQuery } from "@tanstack/react-query";
-import { Plus, SquareArrowOutUpRight, Trash2 } from "lucide-react";
+import { Plus, SquareArrowOutUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
@@ -24,7 +24,6 @@ import {
 } from "../ui/card";
 import { GridPattern } from "../ui/grid-pattern";
 import NoContent from "../ui/no-content";
-
 import CreateGroupForm from "./create-group-form";
 
 const GroupCard = ({
@@ -130,7 +129,7 @@ const GroupCard = ({
                 group.balance >= 0 ? "text-primary" : "text-destructive",
               )}
             >
-              <span>{balanceText}</span>
+              {balanceText}
             </span>
           </div>
         </CardContent>
@@ -151,8 +150,10 @@ const HomePage = () => {
   const user = useUserStore((state) => state.user);
   const userGroups = useUserGroupsDataStore((state) => state.userGroupsData);
   const addUserGroups = useUserGroupsDataStore((state) => state.addUserGroups);
+
   const query = useQuery({
-    queryKey: ["homepage", user!.id],
+    enabled: !!user?.id,
+    queryKey: ["homepage", user?.id],
     queryFn: () => fetchUserGroupsData(user!.id),
     select: (data) => formatUserGroupsData(data.groups),
   });
