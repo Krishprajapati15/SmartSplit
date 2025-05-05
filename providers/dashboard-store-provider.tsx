@@ -22,13 +22,6 @@ export const DashboardStoreProvider = ({
     storeRef.current = createDashboardStore(initialGroupData);
     setInitialDraweeState(initialGroupData.members);
   }
-  // else {
-  //   const currentState = storeRef.current.getState();
-  //   const actions = Object.entries(currentState)
-  //     .filter(([_, value]) => typeof value === "function")
-  //     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-  //   storeRef.current.setState({ ...initialGroupData, ...actions }, true);
-  // }
 
   return (
     <DashboardStoreContext.Provider value={storeRef.current}>
