@@ -13,17 +13,17 @@ interface ErrorProps {
 
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
-    // Log the error to an error reporting service
+    // Log error safely
     console.error("Error on 404 page:", error);
 
-    // ✅ Safe URL logging (optional)
-    const envUrl = process.env.NEXT_PUBLIC_API_URL;
-    if (envUrl) {
+    // ✅ Remove or safely handle env variable
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (apiUrl) {
       try {
-        const parsedUrl = new URL(envUrl);
+        const parsedUrl = new URL(apiUrl);
         console.log("Parsed URL:", parsedUrl.href);
       } catch (e) {
-        console.error("Invalid environment URL:", envUrl);
+        console.error("Invalid URL in NEXT_PUBLIC_API_URL:", apiUrl);
       }
     }
   }, [error]);
